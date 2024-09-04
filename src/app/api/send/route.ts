@@ -8,21 +8,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // const { data, error } = await resend.emails.send({
-    //   from: "Acme <noreply@yourdomain.com>",
-    //   to: ["amitmishra15102@gmail.com"],
-    //   subject: body.subject,
-    //   react: EmailTemplate({
-    //     name: body.name,
-    //     email: body.email,
-    //     message: body.message,
-    //     subject: body.subject,
-    //   }),
-    // });
+    const { data, error } = await resend.emails.send({
+      from: "Acme <noreply@yourdomain.com>",
+      to: ["amitmishra15102@gmail.com"],
+      subject: body.subject,
+      react: EmailTemplate({
+        name: body.name,
+        email: body.email,
+        message: body.message,
+        subject: body.subject,
+      }),
+    });
 
-    // if (error) {
-    //   return Response.json({ error }, { status: 500 });
-    // }
+    if (error) {
+      return Response.json({ error }, { status: 500 });
+    }
 
     await prisma.$transaction(async (tx) => {
       const user = await tx.user.upsert({
